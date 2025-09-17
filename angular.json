@@ -12,11 +12,8 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": {
-              "base": "./dist",
-              "browser": "."
-            },
-            "browser": "index.tsx",
+            "outputPath": "dist",
+            "browser": "main.ts",
             "tsConfig": "tsconfig.json"
           },
           "configurations": {
@@ -45,5 +42,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "68afaea5-d7ba-4e2a-8a3f-13ecd22d7196"
   }
 }
