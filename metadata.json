@@ -1,0 +1,5 @@
+{
+  "name": "Teacher Audit Pro",
+  "description": "A multi-campus application for school administrators to conduct classroom and classwork audits for teachers. It features AI-powered summarization, local data storage, WhatsApp sharing, and performance-based teacher rankings by department and campus.",
+  "requestFramePermissions": []
+}
