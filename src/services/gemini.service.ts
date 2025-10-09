@@ -1,17 +1,19 @@
+
 import { Injectable, signal } from '@angular/core';
 import { GoogleGenAI, GenerateContentResponse } from '@google/genai';
 import { ClassroomAudit, ClassworkAudit, Audit } from '../models';
+import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class GeminiService {
   private ai: GoogleGenAI | null = null;
-  
+
   constructor() {
-    // IMPORTANT: This relies on process.env.API_KEY being available in the execution environment.
-    if (process.env.API_KEY) {
-        this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    // Use Angular environment for API key
+    if (environment.GEMINI_API_KEY) {
+      this.ai = new GoogleGenAI({ apiKey: environment.GEMINI_API_KEY });
     } else {
-        console.error("API_KEY environment variable not found.");
+      console.error('GEMINI_API_KEY not found in environment.');
     }
   }
 
@@ -56,14 +58,14 @@ export class GeminiService {
     `;
 
     try {
-        const response: GenerateContentResponse = await this.ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: prompt,
-        });
-        return response.text;
+      const response: GenerateContentResponse = await this.ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+      });
+      return response.text;
     } catch (error) {
-        console.error('Error generating classroom audit summary:', error);
-        return 'Error generating summary. Please check the console for details.';
+      console.error('Error generating classroom audit summary:', error);
+      return 'Error generating summary. Please check the console for details.';
     }
   }
 
@@ -100,20 +102,20 @@ export class GeminiService {
     `;
 
     try {
-        const response: GenerateContentResponse = await this.ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: prompt,
-        });
-        return response.text;
+      const response: GenerateContentResponse = await this.ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+      });
+      return response.text;
     } catch (error) {
-        console.error('Error generating classwork audit summary:', error);
-        return 'Error generating summary. Please check the console for details.';
+      console.error('Error generating classwork audit summary:', error);
+      return 'Error generating summary. Please check the console for details.';
     }
   }
 
   async analyzeTeacherStrengths(period: string, audits: (Audit & { teacherName: string })[]): Promise<string> {
     if (!this.ai) return "AI service is not configured. Please check API Key.";
-    
+
     // Simplify data to reduce tokens and focus the model
     const simplifiedAudits = audits.map(audit => {
       if (audit.type === 'Classroom') {
@@ -157,22 +159,22 @@ export class GeminiService {
     `;
 
     try {
-        const response: GenerateContentResponse = await this.ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: prompt,
-        });
-        return response.text;
+      const response: GenerateContentResponse = await this.ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+      });
+      return response.text;
     } catch (error) {
-        console.error('Error generating strength analysis:', error);
-        return 'Error generating analysis. Please try again or check the console for details.';
+      console.error('Error generating strength analysis:', error);
+      return 'Error generating analysis. Please try again or check the console for details.';
     }
   }
-  
+
   async analyzeIndividualTeacherStrengths(teacherName: string, period: string, audits: Audit[]): Promise<string> {
     if (!this.ai) return "AI service is not configured. Please check API Key.";
-    
+
     const simplifiedAudits = audits.map(audit => {
-       if (audit.type === 'Classroom') {
+      if (audit.type === 'Classroom') {
         return {
           type: 'Classroom',
           scores: {
@@ -214,15 +216,15 @@ export class GeminiService {
       ${JSON.stringify(simplifiedAudits, null, 2)}
     `;
 
-     try {
-        const response: GenerateContentResponse = await this.ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: prompt,
-        });
-        return response.text;
+    try {
+      const response: GenerateContentResponse = await this.ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+      });
+      return response.text;
     } catch (error) {
-        console.error('Error generating individual strength analysis:', error);
-        return 'Error generating analysis. Please try again or check the console for details.';
+      console.error('Error generating individual strength analysis:', error);
+      return 'Error generating analysis. Please try again or check the console for details.';
     }
   }
 
@@ -251,14 +253,14 @@ export class GeminiService {
     `;
 
     try {
-        const response: GenerateContentResponse = await this.ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: prompt,
-        });
-        return response.text;
+      const response: GenerateContentResponse = await this.ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+      });
+      return response.text;
     } catch (error) {
-        console.error('Error generating praise message:', error);
-        return 'Error generating message. Please try again.';
+      console.error('Error generating praise message:', error);
+      return 'Error generating message. Please try again.';
     }
   }
 }
