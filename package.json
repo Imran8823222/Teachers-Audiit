@@ -59,8 +59,14 @@
     "@angular/platform-browser": "^20.3.6",
     "@angular/platform-browser-dynamic": "^20.3.6",
     "@google/genai": "^1.25.0",
+    "@supabase/supabase-js": "^2.76.1",
+    "dotenv": "^17.2.3",
     "rxjs": "^7.8.2",
     "tslib": "^2.8.1",
     "zone.js": "^0.15.1"
+  },
+  "scripts": {
+    "build:prod": "node scripts/write-env.js && npm run build -- --configuration production",
+    "build": "ng build"
   }
 }
