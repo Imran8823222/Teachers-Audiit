@@ -9,5 +9,12 @@ const env = {
 
 const outPath = path.join(__dirname, '..', 'src', 'assets', 'env.js');
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
-fs.writeFileSync(outPath, 'window.__env__ = ' + JSON.stringify(env, null, 2) + ';' + '\n', { encoding: 'utf8' });
-console.log('Wrote runtime env to', outPath);
+fs.writeFileSync(
+  outPath,
+  'window.__env__ = ' + JSON.stringify(env, null, 2) + ';' + '\n',
+  { encoding: 'utf8' }
+);
+
+// 👇 Add these lines for visibility in Vercel logs
+console.log('✅ Generated env.js at:', outPath);
+console.log('✅ Env variables included:', Object.keys(env).filter(k => !!env[k]));
