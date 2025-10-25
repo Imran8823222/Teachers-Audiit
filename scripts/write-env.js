@@ -1,20 +1,21 @@
+// scripts/write-env.js
 const fs = require('fs');
 const path = require('path');
 
-const env = {
-  GEMINI_API_KEY: process.env.GEMINI_API_KEY || '',
-  SUPABASE_URL: process.env.SUPABASE_URL || '',
-  SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || ''
+const envVars = {
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY || 'NOT_FOUND',
+  SUPABASE_URL: process.env.SUPABASE_URL || 'NOT_FOUND',
+  SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || 'NOT_FOUND'
 };
 
-const outPath = path.join(__dirname, '..', 'src', 'assets', 'env.js');
-fs.mkdirSync(path.dirname(outPath), { recursive: true });
-fs.writeFileSync(
-  outPath,
-  'window.__env__ = ' + JSON.stringify(env, null, 2) + ';' + '\n',
-  { encoding: 'utf8' }
-);
+const content = `window.__env__ = ${JSON.stringify(envVars, null, 2)};`;
+const filePath = path.join(__dirname, '../src/assets/env.js');
 
-// 👇 Add these lines for visibility in Vercel logs
-console.log('✅ Generated env.js at:', outPath);
-console.log('✅ Env variables included:', Object.keys(env).filter(k => !!env[k]));
+// Ensure directory exists
+fs.mkdirSync(path.dirname(filePath), { recursive: true });
+
+// Write the file
+fs.writeFileSync(filePath, content);
+console.log('✅ Generated env.js at:', filePath);
+console.log('✅ Env variables included:', Object.keys(envVars));
+console.log('🔍 Values summary:', envVars);
