@@ -67,6 +67,7 @@
   },
   "scripts": {
     "build:prod": "node scripts/write-env.js && npm run build -- --configuration production",
-    "build": "ng build"
+    "build": "ng build",
+    "vercel-build": "npm run build:prod"
   }
 }
