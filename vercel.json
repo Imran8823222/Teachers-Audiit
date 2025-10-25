@@ -4,7 +4,9 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "dist/browser" }
+      "config": {
+        "distDir": "dist/browser"
+      }
     },
     {
       "src": "api/**/*.js",
@@ -12,12 +14,18 @@
     }
   ],
   "env": {
-    "GEMINI_API_KEY": "@GEMINI_API_KEY",
-    "SUPABASE_URL": "@SUPABASE_URL",
-    "SUPABASE_ANON_KEY": "@SUPABASE_ANON_KEY"
+    "GEMINI_API_KEY": "GEMINI_API_KEY",
+    "SUPABASE_URL": "SUPABASE_URL",
+    "SUPABASE_ANON_KEY": "SUPABASE_ANON_KEY"
   },
   "routes": [
-    { "src": "/assets/env.js", "dest": "/api/env" },
-    { "src": "/(.*)", "dest": "/$1" }
+    {
+      "src": "/assets/env.js",
+      "dest": "/api/env"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
   ]
 }
