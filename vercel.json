@@ -9,7 +9,15 @@
       }
     }
   ],
+  "env": {
+    "GEMINI_API_KEY": "@gemini_api_key",
+    "SUPABASE_URL": "@supabase_url",
+    "SUPABASE_ANON_KEY": "@supabase_anon_key"
+  },
   "routes": [
-    { "src": "/(.*)", "dest": "/$1" }
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
   ]
 }
