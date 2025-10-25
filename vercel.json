@@ -2,30 +2,24 @@
   "version": 2,
   "builds": [
     {
+      "src": "api/env.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist/browser"
       }
-    },
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
     }
   ],
   "env": {
-    "GEMINI_API_KEY": "GEMINI_API_KEY",
-    "SUPABASE_URL": "SUPABASE_URL",
-    "SUPABASE_ANON_KEY": "SUPABASE_ANON_KEY"
+    "GEMINI_API_KEY": "@GEMINI_API_KEY",
+    "SUPABASE_URL": "@SUPABASE_URL",
+    "SUPABASE_ANON_KEY": "@SUPABASE_ANON_KEY"
   },
   "routes": [
-    {
-      "src": "/assets/env.js",
-      "dest": "/api/env"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
+    { "src": "/api/env", "dest": "/api/env.js" },
+    { "src": "/(.*)", "dest": "/$1" }
   ]
 }
